@@ -4,7 +4,7 @@ import com.apps.marvelapp.data.network.MarvelApi
 import com.apps.marvelapp.data.network.datasource.HeroesDataSource
 import com.apps.marvelapp.data.network.datasource.HeroesDataSourceImpl
 import com.apps.marvelapp.data.repositoryimpl.HeroesRepositoryImpl
-import com.apps.marvelapp.domain.constants.Constants.Companion.BASE_URL
+import com.apps.marvelapp.domain.constants.BASE_URL
 import com.apps.marvelapp.domain.repository.HeroesRepository
 import com.apps.marvelapp.domain.usecase.GetHeroesListUseCase
 import com.google.gson.Gson
@@ -32,6 +32,20 @@ object NetworkModule {
 
     @Singleton
     @Provides
+    fun provideGsonBuilder(): Gson {
+        return GsonBuilder()
+            .excludeFieldsWithoutExposeAnnotation()
+            .create()
+    }
+
+    @Singleton
+    @Provides
+    fun provideConvertFactory(gson: Gson) : Converter.Factory {
+        return GsonConverterFactory.create(gson)
+    }
+
+    @Singleton
+    @Provides
     fun provideLoggingInterceptor(): HttpLoggingInterceptor{
         val logging = HttpLoggingInterceptor()
         logging.setLevel(HttpLoggingInterceptor.Level.BODY)
@@ -44,20 +58,6 @@ object NetworkModule {
         return OkHttpClient.Builder()
             .addInterceptor(logging)
             .build()
-    }
-
-    @Singleton
-    @Provides
-    fun provideGsonBuilder(): Gson {
-        return GsonBuilder()
-            .excludeFieldsWithoutExposeAnnotation()
-            .create()
-    }
-
-    @Singleton
-    @Provides
-    fun provideConvertFactory(gson: Gson) : Converter.Factory {
-        return GsonConverterFactory.create(gson)
     }
 
     @Singleton
@@ -94,11 +94,7 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideHeroesRepository(heroesDataSource: HeroesDataSource,):HeroesRepository{
-        return HeroesRepositoryImpl(heroesDataSource)
+    fun provideHeroesRepository(heroesDataSource: HeroesDataSource):HeroesRepository{
+        return HeroesRepositoryImpl(heroesDataSource,)
     }
-
-
-
-
 }

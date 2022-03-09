@@ -5,35 +5,38 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.apps.marvelapp.domain.models.HeroModel
 import com.apps.marvelapp.domain.usecase.GetHeroesListUseCase
 import com.apps.marvelapp.domain.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import java.io.IOException
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
 class HeroesViewModel @Inject constructor(private val getHeroesListUseCase: GetHeroesListUseCase) : ViewModel() {
 
-    private val _heroesList = MutableLiveData<Resource<List<HeroModel>>>()
-    val heroesList: LiveData<Resource<List<HeroModel>>> = _heroesList
-
+    private val _heroesList = MutableLiveData<Resource<PagingData<HeroModel>>>()
+    val heroesList: LiveData<Resource<PagingData<HeroModel>>> = _heroesList
     init {
-        getHeroesList()
+        getHeroesPageList()
     }
 
-    private fun getHeroesList() = viewModelScope.launch {
+    private fun getHeroesPageList() = viewModelScope.launch {
         _heroesList.postValue(Resource.Loading())
-        try{
-            val response = getHeroesListUseCase.getHeroesList()
-            _heroesList.postValue(Resource.Success(response))
-        }catch (t:Throwable){
-            when(t){
-                is IOException -> _heroesList.postValue(Resource.Error("network failure"))
-                else -> _heroesList.postValue(Resource.Error("conversion error"))
+        withContext(Dispatchers.IO){
+            getHeroesListUseCase().cachedIn(viewModelScope)
+                .catch {
+                    _heroesList.postValue(Resource.Error(this.toString()))
+                }
+                .collect {
+                    _heroesList.postValue(Resource.Success(it))
+                }
             }
         }
-    }
-
 }
