@@ -1,0 +1,36 @@
+package com.apps.marvelapp.data.network.dtos.comics
+
+import com.apps.marvelapp.domain.models.ComicModel
+import com.google.gson.annotations.Expose
+import com.google.gson.annotations.SerializedName
+
+data class ComicDto(
+    @Expose
+    @SerializedName("id")
+    val id: Int,
+    @Expose
+    @SerializedName("title")
+    val title: String,
+    @Expose
+    @SerializedName("description")
+    val description: String,
+    @Expose
+    @SerializedName("creators")
+    val creators: List<ComicCreatorDto>,
+    @Expose
+    @SerializedName("characters")
+    val characters: List<ComicCharacterDto>,
+    @Expose
+    @SerializedName("thumbnail")
+    val thumbnail: ComicImageDto,
+){
+    fun toDomainModel() = ComicModel(
+        id,
+        title,
+        description,
+        creators.map { it.toDomainModel() },
+        characters.map { it.toDomainModel() },
+        thumbnail.extension,
+        thumbnail.path
+    )
+}

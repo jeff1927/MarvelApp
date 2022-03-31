@@ -1,7 +1,7 @@
 package com.apps.marvelapp.domain.models
 
 
-data class HeroModel(
+data class CharacterModel(
     val id: Int,
     val name: String,
     val bio: String,

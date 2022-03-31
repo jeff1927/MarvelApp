@@ -1,13 +1,13 @@
-package com.apps.marvelapp.data.network.dtos.characters
+package com.apps.marvelapp.data.network.dtos.comics
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-data class ImageDto(
+data class ComicImageDto(
+    @Expose
     @SerializedName("extension")
-    @Expose
     val extension: String,
-    @SerializedName("path")
     @Expose
+    @SerializedName("path")
     val path: String
 )

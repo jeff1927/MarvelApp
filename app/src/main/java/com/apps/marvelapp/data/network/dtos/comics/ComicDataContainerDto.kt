@@ -1,10 +1,10 @@
-package com.apps.marvelapp.data.network.dtos.characters
+package com.apps.marvelapp.data.network.dtos.comics
 
-import com.apps.marvelapp.domain.models.CharacterDataContainerModel
+import com.apps.marvelapp.data.network.dtos.characters.CharacterDto
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-data class CharacterDataContainerDto(
+data class ComicDataContainerDto(
     @Expose
     @SerializedName("count")
     val count: Int,
@@ -16,16 +16,8 @@ data class CharacterDataContainerDto(
     val offset: Int,
     @Expose
     @SerializedName("results")
-    val results: List<CharacterDto>,
+    val results: List<ComicDto>,
     @Expose
     @SerializedName("total")
     val total: Int
-) {
-    fun toDomainModel() = CharacterDataContainerModel(
-        count,
-        limit,
-        offset,
-        results.map{ it.toDomainModel() },
-        total
-    )
-}
+)

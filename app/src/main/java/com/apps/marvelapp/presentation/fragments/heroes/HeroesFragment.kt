@@ -11,7 +11,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.apps.marvelapp.databinding.HeroesFragmentBinding
-import com.apps.marvelapp.domain.constants.AN_ERROR_HAS_OCURRED
+import com.apps.marvelapp.domain.constants.AN_ERROR_HAS_OCCURRED
+import com.apps.marvelapp.domain.constants.GRID_LAYOUT_SPAN
 import com.apps.marvelapp.domain.utils.Resource
 import com.apps.marvelapp.domain.utils.hideProgressBar
 import com.apps.marvelapp.domain.utils.showProgressBar
@@ -42,7 +43,7 @@ class HeroesFragment : Fragment() {
 
     private fun setupListAdapter(binding: HeroesFragmentBinding) {
         binding.rvHeroes.apply {
-            layoutManager = GridLayoutManager(requireContext(),2)
+            layoutManager = GridLayoutManager(requireContext(), GRID_LAYOUT_SPAN)
             adapter = HeroesAdapter()
         }
     }
@@ -64,7 +65,7 @@ class HeroesFragment : Fragment() {
                 is Resource.Error -> {
                     binding.paginationProgressBar.hideProgressBar()
                     response.message.let { message->
-                        Toast.makeText(requireContext(),"$AN_ERROR_HAS_OCURRED $message", Toast.LENGTH_LONG).show()
+                        Toast.makeText(requireContext(),"$AN_ERROR_HAS_OCCURRED $message", Toast.LENGTH_LONG).show()
                     }
                 }
             }

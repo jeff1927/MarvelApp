@@ -5,19 +5,19 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 data class CharacterDataWrapperDto(
+    @Expose
     @SerializedName("code")
-    @Expose
     val code: Int,
+    @Expose
     @SerializedName("data")
-    @Expose
     val data: CharacterDataContainerDto,
-    @SerializedName("status")
     @Expose
+    @SerializedName("status")
     val status: String
 ) {
     fun toDomainModel() = CharacterDataWrapperModel(
-        code = code,
-        data = data,
-        status = status
+        code,
+        data,
+        status
     )
 }

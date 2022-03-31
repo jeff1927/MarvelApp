@@ -7,10 +7,10 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.apps.marvelapp.databinding.HeroGridItemLayoutBinding
 import com.apps.marvelapp.domain.constants.HEROES_IMAGE_SIZE
-import com.apps.marvelapp.domain.models.HeroModel
+import com.apps.marvelapp.domain.models.CharacterModel
 import com.bumptech.glide.Glide
 
-class HeroesAdapter: PagingDataAdapter<HeroModel, HeroesAdapter.HeroViewHolder>(HeroDifferCallBack()){
+class HeroesAdapter: PagingDataAdapter<CharacterModel, HeroesAdapter.HeroViewHolder>(HeroDifferCallBack()){
 
     class HeroViewHolder (val binding: HeroGridItemLayoutBinding): RecyclerView.ViewHolder(binding.root)
 
@@ -24,19 +24,18 @@ class HeroesAdapter: PagingDataAdapter<HeroModel, HeroesAdapter.HeroViewHolder>(
         holder.binding.apply {
             hero?.let {
                 Glide.with(this.root).load(it.imagePath + HEROES_IMAGE_SIZE + it.imageExt).into(circularImageView)
-                tvHeroName.text = it.name
             }
 
         }
     }
 }
 
-class HeroDifferCallBack: DiffUtil.ItemCallback<HeroModel>() {
-    override fun areItemsTheSame(oldItem: HeroModel, newItem: HeroModel): Boolean {
+class HeroDifferCallBack: DiffUtil.ItemCallback<CharacterModel>() {
+    override fun areItemsTheSame(oldItem: CharacterModel, newItem: CharacterModel): Boolean {
         return oldItem.id == newItem.id
     }
 
-    override fun areContentsTheSame(oldItem: HeroModel, newItem: HeroModel): Boolean {
+    override fun areContentsTheSame(oldItem: CharacterModel, newItem: CharacterModel): Boolean {
         return oldItem == newItem
     }
 

@@ -1,25 +1,24 @@
 package com.apps.marvelapp.data.network.dtos.characters
 
-import com.apps.marvelapp.domain.models.HeroModel
+import com.apps.marvelapp.domain.models.CharacterModel
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 data class CharacterDto(
-
+    @Expose
     @SerializedName("description")
-    @Expose
     val description: String,
+    @Expose
     @SerializedName("id")
-    @Expose
     val id: Int,
+    @Expose
     @SerializedName("name")
-    @Expose
     val name: String,
-    @SerializedName("thumbnail")
     @Expose
-    val thumbnail: ImageDto
+    @SerializedName("thumbnail")
+    val thumbnail: CharacterImageDto
 ){
-    fun toDomainModel()= HeroModel(
+    fun toDomainModel()= CharacterModel(
         id,
         name,
         description,

@@ -15,7 +15,8 @@ const val LIMIT = 20
 const val TS: Long = 1
 const val ONE_UNIT = 1
 const val HEROES_IMAGE_SIZE = "/standard_large."
-const val AN_ERROR_HAS_OCURRED = "an error has occurred,"
+const val AN_ERROR_HAS_OCCURRED = "an error has occurred,"
+const val GRID_LAYOUT_SPAN = 3
 
 
 

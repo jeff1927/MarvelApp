@@ -29,4 +29,6 @@ interface MarvelApi {
         @Query(QUERY_HASH)
         hash: String = BuildConfig.HASH_CODE
     ): CharacterDataWrapperDto
+
+
 }

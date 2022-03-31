@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.apps.marvelapp.domain.models.HeroModel
+import com.apps.marvelapp.domain.models.CharacterModel
 import com.apps.marvelapp.domain.usecase.GetHeroesListUseCase
 import com.apps.marvelapp.domain.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,8 +21,8 @@ import javax.inject.Inject
 @HiltViewModel
 class HeroesViewModel @Inject constructor(private val getHeroesListUseCase: GetHeroesListUseCase) : ViewModel() {
 
-    private val _heroesList = MutableLiveData<Resource<PagingData<HeroModel>>>()
-    val heroesList: LiveData<Resource<PagingData<HeroModel>>> = _heroesList
+    private val _heroesList = MutableLiveData<Resource<PagingData<CharacterModel>>>()
+    val heroesList: LiveData<Resource<PagingData<CharacterModel>>> = _heroesList
     init {
         getHeroesPageList()
     }
