@@ -4,7 +4,7 @@ import com.apps.marvelapp.data.network.MarvelApi
 import com.apps.marvelapp.domain.models.CharacterModel
 import javax.inject.Inject
 
-class HeroesDataSourceImpl@Inject constructor(
+class HeroesDataSourceImpl @Inject constructor(
     private val apiService: MarvelApi
 ): HeroesDataSource {
 

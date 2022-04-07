@@ -16,10 +16,10 @@ data class ComicDto(
     val description: String,
     @Expose
     @SerializedName("creators")
-    val creators: List<ComicCreatorDto>,
+    val creators: ComicCreatorListDto,
     @Expose
     @SerializedName("characters")
-    val characters: List<ComicCharacterDto>,
+    val characters: ComicCharacterListDto,
     @Expose
     @SerializedName("thumbnail")
     val thumbnail: ComicImageDto,
@@ -28,8 +28,8 @@ data class ComicDto(
         id,
         title,
         description,
-        creators.map { it.toDomainModel() },
-        characters.map { it.toDomainModel() },
+        creators.creators.map { it.toDomainModel() },
+        characters.items.map { it.toDomainModel() },
         thumbnail.extension,
         thumbnail.path
     )

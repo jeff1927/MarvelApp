@@ -2,24 +2,24 @@ package com.apps.marvelapp.data.network.datasource
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.apps.marvelapp.domain.constants.NETWORK_PAGE_SIZE
+import com.apps.marvelapp.domain.constants.CHARACTERS_PAGE_SIZE
 import com.apps.marvelapp.domain.constants.ONE_UNIT
 import com.apps.marvelapp.domain.models.CharacterModel
 import retrofit2.HttpException
 import java.io.IOException
 
-private const val HEROES_PAGE_INDEX = 1
+private const val CHARACTERS_PAGE_INDEX = 1
 
 class HeroesPagingSource(
     private val dataSource: HeroesDataSource
     ): PagingSource<Int, CharacterModel>(){
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, CharacterModel> {
-        val position = params.key ?: HEROES_PAGE_INDEX
-        val offset = if (params.key != null) ((position - ONE_UNIT) * NETWORK_PAGE_SIZE) + ONE_UNIT else  HEROES_PAGE_INDEX
+        val position = params.key ?: CHARACTERS_PAGE_INDEX
+        val offset = if (params.key != null) ((position - ONE_UNIT) * CHARACTERS_PAGE_SIZE) + ONE_UNIT else  CHARACTERS_PAGE_INDEX
         return try {
             val response = dataSource.getCharactersPageList(offset,params.loadSize)
-            val nextKey = if (response.size < params.loadSize) null else (position + (params.loadSize / NETWORK_PAGE_SIZE))
-            LoadResult.Page(response, null, nextKey = nextKey)
+            val nextKey = if (response.size < params.loadSize) null else (position + (params.loadSize / CHARACTERS_PAGE_SIZE))
+            LoadResult.Page(response, null, nextKey)
         }catch (e: IOException){
             LoadResult.Error(e)
         }catch (e: HttpException){

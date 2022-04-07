@@ -10,7 +10,7 @@ data class ComicCharacterDto(
     val name: String,
     @Expose
     @SerializedName("role")
-    val role: String,
+    val role: String? = null,
 ){
     fun toDomainModel() = ComicCharacterModel(
         name,
