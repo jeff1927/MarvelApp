@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
+import kotlinx.coroutines.async
 
 @HiltViewModel
 class ComicsViewModel @Inject constructor(private val getComicsUseCase: GetComicsUseCase) : ViewModel() {
@@ -26,9 +27,11 @@ class ComicsViewModel @Inject constructor(private val getComicsUseCase: GetComic
         getComicsPageList()
     }
 
-    private fun getComicsPageList() = viewModelScope.launch{
+
+
+    private fun getComicsPageList() = viewModelScope.apply{
         _comicsList.postValue(Resource.Loading())
-        withContext(Dispatchers.IO){
+        launch(Dispatchers.IO) {
             getComicsUseCase().cachedIn(viewModelScope)
                 .catch {
                     _comicsList.postValue(Resource.Error(this.toString()))

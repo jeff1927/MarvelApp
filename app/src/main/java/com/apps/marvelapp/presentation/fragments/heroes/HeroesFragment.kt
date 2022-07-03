@@ -10,9 +10,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.apps.marvelapp.base.BaseFragment
 import com.apps.marvelapp.databinding.HeroesFragmentBinding
 import com.apps.marvelapp.domain.constants.AN_ERROR_HAS_OCCURRED
-import com.apps.marvelapp.domain.constants.GRID_LAYOUT_SPAN
 import com.apps.marvelapp.domain.utils.Resource
 import com.apps.marvelapp.domain.utils.hideProgressBar
 import com.apps.marvelapp.domain.utils.showProgressBar
@@ -20,35 +21,24 @@ import com.apps.marvelapp.presentation.adapters.HeroesAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class HeroesFragment : Fragment() {
+class HeroesFragment : BaseFragment<HeroesFragmentBinding> (HeroesFragmentBinding::inflate){
 
     private val viewModel by viewModels<HeroesViewModel>()
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        val binding = HeroesFragmentBinding.inflate(inflater,container,false)
-        return binding.root
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        HeroesFragmentBinding.bind(view).let { binding ->
-            setupObserver(binding)
-            setupListAdapter(binding)
-        }
+            setupObserver()
+            setupListAdapter()
     }
 
-    private fun setupListAdapter(binding: HeroesFragmentBinding) {
+    private fun setupListAdapter() {
         binding.rvHeroes.apply {
-            layoutManager = GridLayoutManager(requireContext(), GRID_LAYOUT_SPAN)
+            layoutManager = LinearLayoutManager(requireContext())
             adapter = HeroesAdapter()
         }
     }
 
-    private fun setupObserver(binding: HeroesFragmentBinding) {
+    private fun setupObserver() {
         viewModel.heroesList.observe(viewLifecycleOwner, Observer{ response ->
             when(response){
                 is Resource.Loading -> {

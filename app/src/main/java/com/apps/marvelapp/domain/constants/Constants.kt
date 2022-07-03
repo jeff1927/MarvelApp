@@ -17,14 +17,12 @@ const val AN_ERROR_HAS_OCCURRED = "an error has occurred,"
 
 //CHARACTERS CONSTANTS
 const val CHARACTERS_ENDPOINT = "v1/public/characters"
-const val HEROES_IMAGE_SIZE = "/standard_large."
-const val GRID_LAYOUT_SPAN = 3
+const val HEROES_IMAGE_SIZE = "/portrait_fantastic."
 const val CHARACTERS_PAGE_SIZE = 20
 
 //COMICS CONSTANTS
 const val COMICS_ENDPOINT = "v1/public/comics"
-const val COMICS_PAGE_SIZE = 20
 const val COMICS_IMAGE_SIZE = "/portrait_fantastic."
-
+const val COMICS_PAGE_SIZE = 20
 
 
