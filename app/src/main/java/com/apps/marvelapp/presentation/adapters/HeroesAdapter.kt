@@ -5,17 +5,17 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.apps.marvelapp.databinding.HeroGridItemLayoutBinding
+import com.apps.marvelapp.databinding.GeneralItemLayoutBinding
 import com.apps.marvelapp.domain.constants.HEROES_IMAGE_SIZE
 import com.apps.marvelapp.domain.models.CharacterModel
 import com.bumptech.glide.Glide
 
 class HeroesAdapter: PagingDataAdapter<CharacterModel, HeroesAdapter.HeroViewHolder>(HeroDifferCallBack()){
 
-    class HeroViewHolder (val binding: HeroGridItemLayoutBinding): RecyclerView.ViewHolder(binding.root)
+    class HeroViewHolder (val binding: GeneralItemLayoutBinding): RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HeroViewHolder {
-        val view = HeroGridItemLayoutBinding.inflate(LayoutInflater.from(parent.context),parent, false)
+        val view = GeneralItemLayoutBinding.inflate(LayoutInflater.from(parent.context),parent, false)
         return HeroViewHolder(view)
     }
 
@@ -23,7 +23,9 @@ class HeroesAdapter: PagingDataAdapter<CharacterModel, HeroesAdapter.HeroViewHol
         val hero = getItem(position)
         holder.binding.apply {
             hero?.let {
-                Glide.with(this.root).load(it.imagePath + HEROES_IMAGE_SIZE + it.imageExt).into(circularImageView)
+                tvTitle.text = hero.name
+                tvDescription.text = hero.bio
+                Glide.with(this.root).load(it.imagePath + HEROES_IMAGE_SIZE + it.imageExt).into(ivItemImage)
             }
 
         }
