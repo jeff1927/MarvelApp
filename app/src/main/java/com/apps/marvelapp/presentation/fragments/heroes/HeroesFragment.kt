@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.apps.marvelapp.base.BaseFragment
@@ -31,10 +32,15 @@ class HeroesFragment : BaseFragment<HeroesFragmentBinding> (HeroesFragmentBindin
             setupListAdapter()
     }
 
+
     private fun setupListAdapter() {
         binding.rvHeroes.apply {
             layoutManager = LinearLayoutManager(requireContext())
-            adapter = HeroesAdapter()
+            adapter = HeroesAdapter().apply {
+                setOnItemClickListener { hero->
+                    findNavController().navigate(HeroesFragmentDirections.actionHeroesFragmentToDetailFragment(hero))
+                }
+            }
         }
     }
 
