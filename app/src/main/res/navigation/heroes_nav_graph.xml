@@ -9,15 +9,36 @@
         android:id="@+id/comicsFragment"
         android:name="com.apps.marvelapp.presentation.fragments.comics.ComicsFragment"
         android:label="comics_fragment"
-        tools:layout="@layout/comics_fragment" />
+        tools:layout="@layout/comics_fragment" >
+        <action
+            android:id="@+id/action_comicsFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/favoritesFragment"
         android:name="com.apps.marvelapp.presentation.fragments.favorites.FavoritesFragment"
         android:label="favorites_fragment"
-        tools:layout="@layout/favorites_fragment" />
+        tools:layout="@layout/favorites_fragment" >
+        <action
+            android:id="@+id/action_favoritesFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/heroesFragment"
         android:name="com.apps.marvelapp.presentation.fragments.heroes.HeroesFragment"
         android:label="heroes_fragment"
-        tools:layout="@layout/heroes_fragment" />
+        tools:layout="@layout/heroes_fragment" >
+        <action
+            android:id="@+id/action_heroesFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.apps.marvelapp.presentation.fragments.detail.DetailFragment"
+        android:label="fragment_detail"
+        tools:layout="@layout/fragment_detail" >
+        <argument
+            android:name="character"
+            app:argType="com.apps.marvelapp.domain.models.CharacterModel" />
+    </fragment>
 </navigation>

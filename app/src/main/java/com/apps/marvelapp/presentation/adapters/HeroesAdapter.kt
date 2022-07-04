@@ -20,16 +20,28 @@ class HeroesAdapter: PagingDataAdapter<CharacterModel, HeroesAdapter.HeroViewHol
     }
 
     override fun onBindViewHolder(holder: HeroViewHolder, position: Int) {
-        val hero = getItem(position)
+        val item = getItem(position)
         holder.binding.apply {
-            hero?.let {
+            item?.let { hero->
                 tvTitle.text = hero.name
                 tvDescription.text = hero.bio
-                Glide.with(this.root).load(it.imagePath + HEROES_IMAGE_SIZE + it.imageExt).into(ivItemImage)
+                Glide.with(this.root).load(hero.imagePath + HEROES_IMAGE_SIZE + hero.imageExt).into(ivItemImage)
+                this.root.setOnClickListener {
+                    onItemClickListener?.let {
+                        it(hero)
+                    }
+                }
             }
 
         }
     }
+
+    private var onItemClickListener: ((CharacterModel)-> Unit)? = null
+
+    fun setOnItemClickListener(listener:(CharacterModel)-> Unit) {
+        onItemClickListener = listener
+    }
+
 }
 
 class HeroDifferCallBack: DiffUtil.ItemCallback<CharacterModel>() {
