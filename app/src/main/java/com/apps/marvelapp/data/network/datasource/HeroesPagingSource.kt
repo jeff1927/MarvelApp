@@ -12,7 +12,8 @@ private const val CHARACTERS_PAGE_INDEX = 1
 
 class HeroesPagingSource(
     private val dataSource: HeroesDataSource
-    ): PagingSource<Int, CharacterModel>(){
+    ): PagingSource<Int, CharacterModel>() {
+
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, CharacterModel> {
         val position = params.key ?: CHARACTERS_PAGE_INDEX
         val offset = if (params.key != null) ((position - ONE_UNIT) * CHARACTERS_PAGE_SIZE) + ONE_UNIT else  CHARACTERS_PAGE_INDEX
@@ -27,9 +28,10 @@ class HeroesPagingSource(
         }
 
     }
+
     override fun getRefreshKey(state: PagingState<Int, CharacterModel>): Int? {
         val anchorPosition = state.anchorPosition ?: return null
-        val page = state.closestPageToPosition(anchorPosition)?: return null
-        return page.prevKey?.plus(ONE_UNIT)?: page.nextKey?.minus(ONE_UNIT)
+        val page = state.closestPageToPosition(anchorPosition) ?: return null
+        return page.prevKey?.plus(ONE_UNIT) ?: page.nextKey?.minus(ONE_UNIT)
     }
 }
